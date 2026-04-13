@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Optional
 
 
 # 用户模型
@@ -15,13 +16,13 @@ class UserCreate(UserBase):
 class User(UserBase):
     id: int
     username: str
-    avatar: str = None
+    avatar: Optional[str] = None
     role: str
     is_active: bool
     frequency_max: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class UserPassWord(BaseModel):
