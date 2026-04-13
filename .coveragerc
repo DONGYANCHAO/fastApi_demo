@@ -1,0 +1,83 @@
+# .coveragerc
+# 覆盖率测试配置文件
+
+[run]
+# 数据源
+source = 
+    sql_app
+    routers
+    main
+
+# 分支覆盖率
+branch = True
+
+# 并行模式
+parallel = False
+
+# 省略的文件/目录
+omit = 
+    */tests/*
+    */test_*.py
+    */conftest.py
+    */__pycache__/*
+    */venv/*
+    */env/*
+    */.env/*
+    */.venv/*
+    */site-packages/*
+    */migrations/*
+    */alembic/*
+    data/*
+    utils/*
+    .idea/*
+    .git/*
+    *.pyc
+    *.pyo
+    *.egg-info/*
+
+# 是否显示未覆盖的行
+show_missing = True
+
+[report]
+# 排除的行正则
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    raise AssertionError
+    raise NotImplementedError
+    if __name__ == .__main__.:
+    if TYPE_CHECKING:
+    pass
+    except ImportError:
+    # noqa
+
+# 精度设置
+precision = 2
+
+# 排序方式
+sort = Cover
+
+# 显示摘要
+skip_covered = False
+
+# 最小覆盖率阈值（可选）
+# fail_under = 80
+
+[html]
+# HTML 报告目录
+directory = htmlcov
+
+# 标题
+title = FastAPI Project Coverage Report
+
+# 样式
+extra_css = 
+
+[xml]
+# XML 报告输出
+output = coverage.xml
+
+[json]
+# JSON 报告输出
+output = coverage.json
+pretty_print = True
