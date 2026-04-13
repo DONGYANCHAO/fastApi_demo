@@ -11,11 +11,11 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 # 获取密码哈希值
 def get_password_hash(password):
-    return pwd_context.hash(password)
+    return pwd_context.hash(password[:64])
 
 
 def verify_password(plain_password, hashed_password):
-    return pwd_context.verify(plain_password, hashed_password)
+    return pwd_context.verify(plain_password[:64], hashed_password)
 
 
 # 根据用户ID获取用户信息
@@ -64,7 +64,12 @@ def delete_user(db: Session, user_id: int):
 
 # 修改用户
 def update_user(db: Session, user: schemas_user.User):
-    user = dict(user)
+    if hasattr(user, 'model_dump'):
+        user = user.model_dump()
+    elif hasattr(user, '__dict__'):
+        user = {k: v for k, v in user.__dict__.items() if not k.startswith('_')}
+    else:
+        user = dict(user)
     uid = user.pop('id')
     # user.pop('email')
     res = db.query(models.User).filter(models.User.id == uid).update(user)
